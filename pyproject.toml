@@ -5,10 +5,18 @@ build-backend = "hatchling.build"
 [project]
 name = "mcp-approval-proxy"
 version = "0.1.0"
-description = "Transparent MCP proxy that intercepts write/destructive tool calls and requests approval via configurable channels"
+description = "Transparent MCP proxy that gates write/destructive tool calls behind MCP-native elicitation approval"
+readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+keywords = ["mcp", "model-context-protocol", "proxy", "approval", "elicitation"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 3 - Alpha",
+]
 dependencies = [
-    "fastmcp>=2.0.0",
+    "fastmcp>=3.0.0",
     "httpx>=0.27.0",
     "anyio>=4.0.0",
 ]
@@ -16,8 +24,21 @@ dependencies = [
 [project.scripts]
 approval-proxy = "mcp_approval_proxy.__main__:main"
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/mcp_approval_proxy"]
 
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
 [tool.uv]
-dev-dependencies = []
+dev-dependencies = [
+    "pytest>=8.0.0",
+    "pytest-asyncio>=0.24.0",
+]
